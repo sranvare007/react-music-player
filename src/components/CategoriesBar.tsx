@@ -10,7 +10,9 @@ export default function CategoriesBar() {
     >
       {tabsList.map((item, index) => (
         <p
-          className={`mx-8 font-sofia-sans font-semibold text-lg hover:opacity-75 cursor-pointer`}
+          className={`mx-8 font-sofia-sans font-semibold text-lg hover:opacity-75 cursor-pointer ${
+            activeTab == item ? "activeCategory" : null
+          }`}
           key={index}
           id="category-type"
           onClick={() => {

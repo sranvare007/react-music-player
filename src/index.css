@@ -29,3 +29,14 @@
   transition: all;
   transition-duration: 0.5s;
 }
+
+.activeCategory::before {
+  content: "";
+  background-color: #0a2647;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: 2px;
+  width: 50%;
+  translate: -50%;
+}

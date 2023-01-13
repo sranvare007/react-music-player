@@ -2,9 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#category-type {
+  position: relative;
+}
+
+#category-type::after {
+  content: "";
+  background-color: #0a2647;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: 2px;
+  width: 50%;
+  translate: -50%;
+  width: 0;
+}
+
+#category-type:hover::after {
+  width: 50%;
+  transition: all;
+  transition-duration: 0.5s;
 }

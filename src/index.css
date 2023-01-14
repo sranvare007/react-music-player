@@ -40,3 +40,22 @@
   width: 50%;
   translate: -50%;
 }
+
+#play-overlay {
+  scale: 0;
+}
+
+#card-image {
+  transition: all;
+  transition-duration: 1s;
+}
+
+#card-container:hover #card-image {
+  scale: 1.5;
+  opacity: 0.8;
+}
+
+#card-image:hover + #play-overlay,
+#play-overlay:hover {
+  scale: 1;
+}

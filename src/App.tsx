@@ -3,9 +3,10 @@ import "./App.css";
 import CategoriesBar from "./components/CategoriesBar";
 import NavBar from "./components/NavBar";
 import SongCard from "./components/SongCard";
+import SongCategoryRow from "./components/SongCategoryRow";
 import { WelcomeAnimation } from "./components/welcomeAnimation";
 import { NetworkManager } from "./networkManager/networkManager";
-import { HomepageData } from "./types/apiResponseTypes";
+import { HomepageData, SongElement } from "./types/apiResponseTypes";
 
 function App() {
   const [homepageData, setHomepageData] = useState<HomepageData>();
@@ -38,7 +39,10 @@ function App() {
       <div className={`w-screen h-screen flex flex-col items-start`}>
         <NavBar />
         <CategoriesBar categoriesList={categoriesList as string[]} />
-        <SongCard />
+        <SongCategoryRow
+          title="Trending"
+          songsList={homepageData?.trending.songs as SongElement[]}
+        />
         {/* <WelcomeAnimation /> */}
       </div>
     )

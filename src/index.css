@@ -59,3 +59,11 @@
 #play-overlay:hover {
   scale: 1;
 }
+
+.song-category-container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.song-category-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

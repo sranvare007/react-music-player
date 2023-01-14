@@ -8,7 +8,7 @@ export default function CategoriesBar({ categoriesList }: CategoriesBarProps) {
 
   return (
     <div
-      className={`flex flex-row w-full items-center px-6 py-4 justify-center border-b-2 border-[#0A2647] border-opacity-75`}
+      className={`flex flex-row w-full items-center px-6 py-4 justify-center border-b-[1px] border-[#0A2647] border-opacity-50`}
     >
       {tabsList.map((item, index) => (
         <p

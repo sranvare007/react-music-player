@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { CategoriesBarProps } from "../types/propsTypes";
 
-export default function CategoriesBar({ categoriesList }: CategoriesBarProps) {
+export default function CategoriesBar({
+  categoriesList,
+  selectedCategory,
+  setSelectedCategory,
+}: CategoriesBarProps) {
   const tabsList = categoriesList;
-  const [activeTab, setActiveTab] = useState(categoriesList[0]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   return (
     <div
@@ -13,12 +15,12 @@ export default function CategoriesBar({ categoriesList }: CategoriesBarProps) {
       {tabsList.map((item, index) => (
         <p
           className={`mx-8 capitalize font-sofia-sans font-semibold text-lg hover:opacity-75 cursor-pointer ${
-            activeTab == item ? "activeCategory" : null
+            selectedCategory == item ? "activeCategory" : null
           }`}
           key={index}
           id="category-type"
           onClick={() => {
-            setActiveTab(item);
+            setSelectedCategory(item);
           }}
         >
           {item}

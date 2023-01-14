@@ -12,14 +12,29 @@ function App() {
   const [homepageData, setHomepageData] = useState<HomepageData>();
   const [categoriesList, setCategoriesList] = useState<string[]>();
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>();
 
   const fetchHomepageData = async () => {
     const response = await NetworkManager.getHomePageData();
+    console.log(response.data);
     setHomepageData(response.data);
     setCategoriesList(Object.keys(response.data));
+    setSelectedCategory(Object.keys(response.data)[0]);
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
+  };
+
+  const getSongsList = () => {
+    switch (selectedCategory) {
+      case "trending":
+        return homepageData?.trending.songs as SongElement[];
+        break;
+      default:
+        return (
+          homepageData && (homepageData[selectedCategory] as SongElement[])
+        );
+    }
   };
 
   useEffect(() => {
@@ -38,10 +53,14 @@ function App() {
     !isLoading && (
       <div className={`w-screen h-screen flex flex-col items-start`}>
         <NavBar />
-        <CategoriesBar categoriesList={categoriesList as string[]} />
+        <CategoriesBar
+          categoriesList={categoriesList as string[]}
+          selectedCategory={selectedCategory as string}
+          setSelectedCategory={setSelectedCategory}
+        />
         <SongCategoryRow
-          title="Trending"
-          songsList={homepageData?.trending.songs as SongElement[]}
+          title={selectedCategory as string}
+          songsList={getSongsList()}
         />
         {/* <WelcomeAnimation /> */}
       </div>

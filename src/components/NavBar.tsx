@@ -3,7 +3,7 @@ import { GiMusicalNotes } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
 
 export default function NavBar() {
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <div
       className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4`}
@@ -16,7 +16,9 @@ export default function NavBar() {
       <div
         className={`flex flex-row bg-white px-3 py-2 rounded-3xl`}
         onClick={() => {
-          inputRef.current.focus();
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
         }}
       >
         <BsSearch size={25} color="#000" />

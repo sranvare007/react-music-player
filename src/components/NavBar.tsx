@@ -6,7 +6,7 @@ export default function NavBar() {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <div
-      className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4`}
+      className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4 rounded-bl-lg rounded-br-lg`}
     >
       <div className={`flex flex-row items-center`}>
         <GiMusicalNotes size={40} className={`-mb-4`} />

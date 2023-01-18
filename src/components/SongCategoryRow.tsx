@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { globalConstants } from "../constants";
+import { NetworkManager } from "../networkManager/networkManager";
 import { SongElement } from "../types/apiResponseTypes";
 import { SongsCategoryRowProps } from "../types/propsTypes";
+import AudioPlayer from "./AudioPlayer";
 import SongCard from "./SongCard";
 
 export default function SongCategoryRow({
   title,
   songsList,
 }: SongsCategoryRowProps) {
+  const [songUrl, setSongUrl] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioPlayerRef = useRef<HTMLAudioElement>(null);
+
   const getSongsList = () => {
     return (
       <div className={`flex flex-row items-center`}>
@@ -14,7 +21,21 @@ export default function SongCategoryRow({
           songsList.length > 0 &&
           songsList.map((item: SongElement, index: number) => {
             return (
-              <div className={`mx-4 my-2`} key={index}>
+              <div
+                className={`mx-4 my-2`}
+                key={index}
+                onClick={async () => {
+                  const songDetails = await NetworkManager.getSongDetails(
+                    item.url
+                  );
+                  if (songDetails.status === globalConstants.status.SUCCESS) {
+                    setSongUrl(songDetails.data[0].downloadUrl[0].link);
+                    if (songUrl) {
+                      audioPlayerRef.current?.play();
+                    }
+                  }
+                }}
+              >
                 <SongCard imageUrl={item.image[2].link} />
               </div>
             );
@@ -33,6 +54,7 @@ export default function SongCategoryRow({
       <div className={`flex-1 overflow-scroll song-category-container`}>
         {getSongsList()}
       </div>
+      <audio src={songUrl} ref={audioPlayerRef} />
     </div>
   );
 }

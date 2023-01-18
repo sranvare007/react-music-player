@@ -4,6 +4,7 @@ import CategoriesBar from "./components/CategoriesBar";
 import NavBar from "./components/NavBar";
 import SongCard from "./components/SongCard";
 import SongCategoryRow from "./components/SongCategoryRow";
+import SongPlayerBottom from "./components/SongPlayerBottom";
 import { WelcomeAnimation } from "./components/welcomeAnimation";
 import { NetworkManager } from "./networkManager/networkManager";
 import { HomepageData, SongElement } from "./types/apiResponseTypes";
@@ -31,9 +32,9 @@ function App() {
         return homepageData?.trending.songs as SongElement[];
         break;
       default:
-        return (
-          homepageData && (homepageData[selectedCategory] as SongElement[])
-        );
+        return homepageData != null
+          ? (homepageData[selectedCategory] as SongElement[])
+          : [];
     }
   };
 
@@ -62,6 +63,7 @@ function App() {
           title={selectedCategory as string}
           songsList={getSongsList()}
         />
+        <SongPlayerBottom songName="Flowers" artistName="Miley Cyrus" />
         {/* <WelcomeAnimation /> */}
       </div>
     )

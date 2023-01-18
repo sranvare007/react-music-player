@@ -14,3 +14,8 @@ export type SongsCategoryRowProps = {
 export type SongCardProps = {
   imageUrl: string;
 };
+
+export type SongPlayerBottomProps = {
+  songName: string;
+  artistName: string;
+};

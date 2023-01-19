@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { globalConstants } from "../constants";
+import { setIsSongPlaying } from "../features/songList/isSongPlaying";
 import { setSongPlaying } from "../features/songList/songPlaying";
 import { NetworkManager } from "../networkManager/networkManager";
 import { SongElement } from "../types/apiResponseTypes";
@@ -15,9 +16,9 @@ export default function SongCategoryRow({
   title,
   songsList,
 }: SongsCategoryRowProps) {
-  // const songPlaying = useSelector<RootState>(
-  //   (state) => state.songPlaying.value
-  // );
+  const songPlaying = useSelector<RootState>(
+    (state) => state.songPlaying.value
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const getSongsList = () => {
@@ -31,11 +32,14 @@ export default function SongCategoryRow({
                 className={`mx-4 my-2`}
                 key={index}
                 onClick={async () => {
-                  const songDetails = await NetworkManager.getSongDetails(
-                    item.url
-                  );
-                  if (songDetails.status === globalConstants.status.SUCCESS) {
-                    dispatch(setSongPlaying(songDetails.data[0]));
+                  if (songPlaying == null || songPlaying.id != item.id) {
+                    const songDetails = await NetworkManager.getSongDetails(
+                      item.url
+                    );
+                    if (songDetails.status === globalConstants.status.SUCCESS) {
+                      dispatch(setSongPlaying(songDetails.data[0]));
+                      dispatch(setIsSongPlaying(true));
+                    }
                   }
                 }}
               >

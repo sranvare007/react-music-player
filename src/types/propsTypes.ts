@@ -16,11 +16,5 @@ export type SongCardProps = {
   imageUrl: string;
 };
 
-export type SongPlayerBottomProps = {
-  songName: string;
-  artistName: string;
-  thumbnailUrl: string;
-};
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,24 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const songsListSlice = createSlice({
+  name: "songsList",
   initialState: {
-    value: 0,
+    value: [],
   },
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setSongsList: (state, action) => {
+      state.value = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { setSongsList } = songsListSlice.actions;
 
-export default counterSlice.reducer;
+export default songsListSlice.reducer;

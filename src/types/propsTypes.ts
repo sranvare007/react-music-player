@@ -1,3 +1,4 @@
+import store from "../app/store";
 import { SongElement } from "./apiResponseTypes";
 
 export type CategoriesBarProps = {
@@ -18,4 +19,8 @@ export type SongCardProps = {
 export type SongPlayerBottomProps = {
   songName: string;
   artistName: string;
+  thumbnailUrl: string;
 };
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

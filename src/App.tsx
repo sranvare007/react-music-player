@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import CategoriesBar from "./components/CategoriesBar";
 import NavBar from "./components/NavBar";
-import SongCard from "./components/SongCard";
 import SongCategoryRow from "./components/SongCategoryRow";
 import SongPlayerBottom from "./components/SongPlayerBottom";
 import { WelcomeAnimation } from "./components/welcomeAnimation";
+import { setHomePageData } from "./features/songList/homepageData";
 import { NetworkManager } from "./networkManager/networkManager";
 import { HomepageData, SongElement } from "./types/apiResponseTypes";
+import { AppDispatch, RootState } from "./types/propsTypes";
 
 function App() {
-  const [homepageData, setHomepageData] = useState<HomepageData>();
+  const homepageData = useSelector<RootState>(
+    (state) => state.homepageData.value
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  const songPlaying = useSelector<RootState>(
+    (state) => state.songPlaying.value
+  );
   const [categoriesList, setCategoriesList] = useState<string[]>();
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>();
@@ -18,7 +26,7 @@ function App() {
   const fetchHomepageData = async () => {
     const response = await NetworkManager.getHomePageData();
     console.log(response.data);
-    setHomepageData(response.data);
+    dispatch(setHomePageData(response.data));
     setCategoriesList(Object.keys(response.data));
     setSelectedCategory(Object.keys(response.data)[0]);
     setTimeout(() => {
@@ -30,7 +38,6 @@ function App() {
     switch (selectedCategory) {
       case "trending":
         return homepageData?.trending.songs as SongElement[];
-        break;
       default:
         return homepageData != null
           ? (homepageData[selectedCategory] as SongElement[])
@@ -63,8 +70,13 @@ function App() {
           title={selectedCategory as string}
           songsList={getSongsList()}
         />
-        <SongPlayerBottom songName="Flowers" artistName="Miley Cyrus" />
-        {/* <WelcomeAnimation /> */}
+        {songPlaying != null && (
+          <SongPlayerBottom
+            songName="Flowers"
+            artistName="Miley Cyrus"
+            thumbnailUrl="https://c.saavncdn.com/877/COWBELL-WARRIOR-English-2022-20221026054231-500x500.jpg?bch=465024"
+          />
+        )}
       </div>
     )
   );

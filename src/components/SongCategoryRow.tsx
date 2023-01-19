@@ -1,18 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { globalConstants } from "../constants";
+import { setSongPlaying } from "../features/songList/songPlaying";
 import { NetworkManager } from "../networkManager/networkManager";
 import { SongElement } from "../types/apiResponseTypes";
-import { SongsCategoryRowProps } from "../types/propsTypes";
-import AudioPlayer from "./AudioPlayer";
+import {
+  AppDispatch,
+  RootState,
+  SongsCategoryRowProps,
+} from "../types/propsTypes";
 import SongCard from "./SongCard";
 
 export default function SongCategoryRow({
   title,
   songsList,
 }: SongsCategoryRowProps) {
-  const [songUrl, setSongUrl] = useState("");
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioPlayerRef = useRef<HTMLAudioElement>(null);
+  // const songPlaying = useSelector<RootState>(
+  //   (state) => state.songPlaying.value
+  // );
+  const dispatch = useDispatch<AppDispatch>();
 
   const getSongsList = () => {
     return (
@@ -29,10 +35,7 @@ export default function SongCategoryRow({
                     item.url
                   );
                   if (songDetails.status === globalConstants.status.SUCCESS) {
-                    setSongUrl(songDetails.data[0].downloadUrl[0].link);
-                    if (songUrl) {
-                      audioPlayerRef.current?.play();
-                    }
+                    dispatch(setSongPlaying(songDetails.data[0]));
                   }
                 }}
               >
@@ -54,7 +57,6 @@ export default function SongCategoryRow({
       <div className={`flex-1 overflow-scroll song-category-container`}>
         {getSongsList()}
       </div>
-      <audio src={songUrl} ref={audioPlayerRef} />
     </div>
   );
 }

@@ -36,7 +36,7 @@ export default function SongCategoryRow({
                     const songDetails = await NetworkManager.getSongDetails(
                       item.url
                     );
-                    console.log(songDetails);
+                    songDetails;
                     if (songDetails.status === globalConstants.status.SUCCESS) {
                       dispatch(setSongPlaying(songDetails.data[0]));
                       dispatch(setIsSongPlaying(true));

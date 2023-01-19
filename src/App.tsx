@@ -25,7 +25,6 @@ function App() {
 
   const fetchHomepageData = async () => {
     const response = await NetworkManager.getHomePageData();
-    console.log(response.data);
     dispatch(setHomePageData(response.data));
     setCategoriesList(Object.keys(response.data));
     setSelectedCategory(Object.keys(response.data)[0]);

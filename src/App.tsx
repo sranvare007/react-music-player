@@ -19,6 +19,7 @@ function App() {
   const songPlaying = useSelector<RootState>(
     (state) => state.songPlaying.value
   );
+
   const [categoriesList, setCategoriesList] = useState<string[]>();
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>();
@@ -70,6 +71,7 @@ function App() {
           title={selectedCategory as string}
           songsList={getSongsList()}
         />
+        {songPlaying != null && <SongPlayerBottom />}
       </div>
     )
   );

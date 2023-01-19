@@ -4,7 +4,7 @@ import { globalConstants } from "../constants";
 import { setIsSongPlaying } from "../features/songList/isSongPlaying";
 import { setSongPlaying } from "../features/songList/songPlaying";
 import { NetworkManager } from "../networkManager/networkManager";
-import { SongElement } from "../types/apiResponseTypes";
+import { SongDetails, SongElement } from "../types/apiResponseTypes";
 import {
   AppDispatch,
   RootState,
@@ -16,9 +16,9 @@ export default function SongCategoryRow({
   title,
   songsList,
 }: SongsCategoryRowProps) {
-  const songPlaying = useSelector<RootState>(
+  const songPlaying: SongDetails = useSelector<RootState>(
     (state) => state.songPlaying.value
-  );
+  ) as SongDetails;
   const dispatch = useDispatch<AppDispatch>();
 
   const getSongsList = () => {
@@ -36,6 +36,7 @@ export default function SongCategoryRow({
                     const songDetails = await NetworkManager.getSongDetails(
                       item.url
                     );
+                    console.log(songDetails);
                     if (songDetails.status === globalConstants.status.SUCCESS) {
                       dispatch(setSongPlaying(songDetails.data[0]));
                       dispatch(setIsSongPlaying(true));

@@ -12,9 +12,9 @@ import { HomepageData, SongElement } from "./types/apiResponseTypes";
 import { AppDispatch, RootState } from "./types/propsTypes";
 
 function App() {
-  const homepageData = useSelector<RootState>(
+  const homepageData: HomepageData = useSelector<RootState>(
     (state) => state.homepageData.value
-  );
+  ) as HomepageData;
   const dispatch = useDispatch<AppDispatch>();
   const songPlaying = useSelector<RootState>(
     (state) => state.songPlaying.value
@@ -40,7 +40,8 @@ function App() {
         return homepageData?.trending.songs as SongElement[];
       default:
         return homepageData != null
-          ? (homepageData[selectedCategory] as SongElement[])
+          ? // @ts-ignore
+            (homepageData[selectedCategory] as SongElement[])
           : [];
     }
   };
@@ -70,13 +71,6 @@ function App() {
           title={selectedCategory as string}
           songsList={getSongsList()}
         />
-        {songPlaying != null && (
-          <SongPlayerBottom
-            songName="Flowers"
-            artistName="Miley Cyrus"
-            thumbnailUrl="https://c.saavncdn.com/877/COWBELL-WARRIOR-English-2022-20221026054231-500x500.jpg?bch=465024"
-          />
-        )}
       </div>
     )
   );

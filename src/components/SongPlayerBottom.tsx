@@ -3,12 +3,13 @@ import { BiRewind, BiFastForward, BiPlay, BiPause } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSongPlaying } from "../features/songList/isSongPlaying";
+import { SongDetails } from "../types/apiResponseTypes";
 import { AppDispatch, RootState } from "../types/propsTypes";
 
 export default function SongPlayerBottom() {
-  const songPlaying = useSelector<RootState>(
+  const songPlaying: SongDetails = useSelector<RootState>(
     (state) => state.songPlaying.value
-  );
+  ) as SongDetails;
   const isSongPlaying = useSelector<RootState>(
     (state) => state.isSongPlaying.value
   );

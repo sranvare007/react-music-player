@@ -142,3 +142,31 @@ export interface PurpleArtist {
   type: ArtistType;
   role: string;
 }
+
+export interface SongDetails {
+  id: string;
+  name: string;
+  type: string;
+  album: Album;
+  year: string;
+  releaseDate: Date;
+  duration: string;
+  label: string;
+  primaryArtists: string;
+  primaryArtistsId: string;
+  featuredArtists: string;
+  featuredArtistsId: string;
+  explicitContent: number;
+  playCount: number;
+  language: string;
+  hasLyrics: string;
+  url: string;
+  copyright: string;
+  image: DownloadURL[];
+  downloadUrl: DownloadURL[];
+}
+
+export interface DownloadURL {
+  quality: string;
+  link: string;
+}

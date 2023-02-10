@@ -5,7 +5,7 @@ import { NetworkManager } from "../networkManager/networkManager";
 import { Playlist, SongDetails } from "../types/apiResponseTypes";
 
 export default function PlayList() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const [playListDetails, setPlaylistDetails] = useState<Playlist>();
 

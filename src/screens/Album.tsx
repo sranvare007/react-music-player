@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import LoaderAnimation from "../components/LoaderAnimation";
 import SongList from "../components/SongList";
 import { NetworkManager } from "../networkManager/networkManager";
 import { Album, SongDetails } from "../types/apiResponseTypes";
@@ -21,7 +22,7 @@ export default function AlbumComponent() {
   }, []);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <LoaderAnimation />;
   }
 
   return (

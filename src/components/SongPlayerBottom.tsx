@@ -19,12 +19,27 @@ export default function SongPlayerBottom() {
   const [audioTotalDuration, setAudioTotalDuration] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const prevSong = useRef(songPlaying);
+  const availableQualities = [
+    "12kbps",
+    "48kbps",
+    "96kbps",
+    "160kbps",
+    "320kbps",
+  ];
+  const [selectedQuality, setSelectedQuality] = useState(availableQualities[0]);
+  const [shouldShowQualityDropdown, setShouldShowQualityDropdown] =
+    useState(false);
+  const [selectedSongUrl, setSelectedSongUrl] = useState("");
 
   useEffect(() => {
     if (songPlaying != prevSong.current) {
       setTimeElapsed(0);
       prevSong.current = songPlaying;
     }
+    const filteredSong = songPlaying.downloadUrl.filter(
+      (item) => item.quality == selectedQuality
+    );
+    setSelectedSongUrl(filteredSong[0].link as string);
     let timer: number | undefined;
     if (audioPlayerRef != null && audioPlayerRef.current != null) {
       audioPlayerRef.current.onloadedmetadata = (e) => {
@@ -43,13 +58,13 @@ export default function SongPlayerBottom() {
       }
     }
     return () => clearInterval(timer);
-  }, [songPlaying, isSongPlaying, timeElapsed]);
+  }, [songPlaying, isSongPlaying, timeElapsed, selectedQuality]);
 
   return (
     <div
-      className={`flex flex-row items-center bg-[#7B2869] py-6 px-6 justify-between text-white rounded-tl-lg rounded-tr-lg shadow-md`}
+      className={`flex flex-row items-center bg-[#7B2869] py-6 px-6 justify-between text-white rounded-tl-lg rounded-tr-lg shadow-md relative`}
     >
-      <audio src={songPlaying.downloadUrl[0].link} ref={audioPlayerRef} />
+      <audio src={selectedSongUrl} ref={audioPlayerRef} />
       {/* Song details container */}
       <div className={`flex flex-row items-center flex-1`}>
         <img
@@ -114,8 +129,42 @@ export default function SongPlayerBottom() {
       </div>
 
       <div className={`flex flex-row flex-1 justify-end`}>
-        <BsThreeDotsVertical size={25} className={`cursor-pointer`} />
+        <BsThreeDotsVertical
+          size={25}
+          className={`cursor-pointer`}
+          onClick={() => {
+            setShouldShowQualityDropdown(!shouldShowQualityDropdown);
+          }}
+        />
       </div>
+      {shouldShowQualityDropdown && (
+        <div
+          className={`absolute right-10 -top-64 w-40 flex flex-col items-center border border-gray-500 rounded-lg bg-gray-50 animate-scaleup origin-bottom overflow-hidden`}
+        >
+          <div className={`w-full border-b border-gray-500`}>
+            <p
+              className={`font-sofia-sans font-semibold text-lg text-black text-center py-3`}
+            >
+              Quality
+            </p>
+          </div>
+          <div className={`flex flex-col w-full items-center`}>
+            {availableQualities.map((item, index) => (
+              <p
+                className={`w-full text-center font-sofia-sans text-black font-medium py-3 cursor-pointer ${
+                  selectedQuality == item ? "bg-[#EAEAEA]" : ""
+                }`}
+                onClick={() => {
+                  setSelectedQuality(item);
+                  setShouldShowQualityDropdown(false);
+                }}
+              >
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

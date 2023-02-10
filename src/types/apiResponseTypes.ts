@@ -62,6 +62,7 @@ export enum Language {
 export enum AlbumType {
   Album = "album",
   Song = "song",
+  Playlist = "playlist",
 }
 
 export interface Chart {
@@ -97,6 +98,12 @@ export interface Playlist {
   followerCount: string;
   lastUpdated: string;
   explicitContent: string;
+  name?: string;
+  fanCount?: string;
+  username?: string;
+  lastname?: string;
+  shares?: string;
+  songs?: SongDetails[];
 }
 
 export enum UserID {

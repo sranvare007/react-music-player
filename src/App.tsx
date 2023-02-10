@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import CategoriesBar from "./components/CategoriesBar";
 import NavBar from "./components/NavBar";
-import SongCategoryRow from "./components/SongCategoryRow";
 import SongPlayerBottom from "./components/SongPlayerBottom";
 import { WelcomeAnimation } from "./components/welcomeAnimation";
 import { setHomePageData } from "./features/songList/homepageData";
 import { NetworkManager } from "./networkManager/networkManager";
+import Home from "./screens/Home";
 import { HomepageData, SongElement } from "./types/apiResponseTypes";
 import { AppDispatch, RootState } from "./types/propsTypes";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PlayList from "./screens/Playlist";
+import Album from "./screens/Album";
 
 function App() {
   const homepageData: HomepageData = useSelector<RootState>(
@@ -60,19 +63,33 @@ function App() {
 
   return (
     !isLoading && (
-      <div className={`w-screen h-screen flex flex-col items-start`}>
-        <NavBar />
-        <CategoriesBar
-          categoriesList={categoriesList as string[]}
-          selectedCategory={selectedCategory as string}
-          setSelectedCategory={setSelectedCategory}
-        />
-        <SongCategoryRow
-          title={selectedCategory as string}
-          songsList={getSongsList()}
-        />
-        {songPlaying != null && <SongPlayerBottom />}
-      </div>
+      <Router>
+        <div className={`w-screen h-screen flex flex-col items-start`}>
+          <NavBar />
+          <CategoriesBar
+            categoriesList={categoriesList as string[]}
+            selectedCategory={selectedCategory as string}
+            setSelectedCategory={setSelectedCategory}
+          />
+
+          <Switch>
+            <Route path="/" exact>
+              <Home
+                selectedCategory={selectedCategory as string}
+                songsList={getSongsList()}
+              />
+            </Route>
+            <Route path="/playlist/:id">
+              <PlayList />
+            </Route>
+            <Route path="/album/:id">
+              <Album />
+            </Route>
+          </Switch>
+
+          {songPlaying != null && <SongPlayerBottom />}
+        </div>
+      </Router>
     )
   );
 }

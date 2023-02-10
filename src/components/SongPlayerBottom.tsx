@@ -3,6 +3,7 @@ import { BiRewind, BiFastForward, BiPlay, BiPause } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSongPlaying } from "../features/songList/isSongPlaying";
+import { helpers } from "../helper";
 import { SongDetails } from "../types/apiResponseTypes";
 import { AppDispatch, RootState } from "../types/propsTypes";
 
@@ -44,14 +45,14 @@ export default function SongPlayerBottom() {
     return () => clearInterval(timer);
   }, [songPlaying, isSongPlaying, timeElapsed]);
 
-  function getTimeInMinutesFromSeconds(seconds: number) {
-    const minutesElpased = (seconds / 60).toFixed(0);
-    const secondsElapsed = (seconds % 60).toFixed(0);
+  // function getTimeInMinutesFromSeconds(seconds: number) {
+  //   const minutesElpased = (seconds / 60).toFixed(0);
+  //   const secondsElapsed = (seconds % 60).toFixed(0);
 
-    return `${
-      minutesElpased.length < 2 ? "0" + minutesElpased : minutesElpased
-    }:${secondsElapsed.length < 2 ? "0" + secondsElapsed : secondsElapsed}`;
-  }
+  //   return `${
+  //     minutesElpased.length < 2 ? "0" + minutesElpased : minutesElpased
+  //   }:${secondsElapsed.length < 2 ? "0" + secondsElapsed : secondsElapsed}`;
+  // }
 
   return (
     <div
@@ -100,8 +101,8 @@ export default function SongPlayerBottom() {
         className={`flex flex-row items-center justify-center py-2 border-[1px] border-white rounded-3xl w-36`}
       >
         <p className={`text-sm font-sofia-sans font-medium `}>
-          {getTimeInMinutesFromSeconds(timeElapsed)} /{" "}
-          {getTimeInMinutesFromSeconds(audioTotalDuration)}
+          {helpers.getTimeInMinutesFromSeconds(timeElapsed)} /{" "}
+          {helpers.getTimeInMinutesFromSeconds(audioTotalDuration)}
         </p>
       </div>
 

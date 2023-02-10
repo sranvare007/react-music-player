@@ -11,6 +11,7 @@ import {
   SongsCategoryRowProps,
 } from "../types/propsTypes";
 import SongCard from "./SongCard";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 export default function SongCategoryRow({
   title,
@@ -20,6 +21,8 @@ export default function SongCategoryRow({
     (state) => state.songPlaying.value
   ) as SongDetails;
   const dispatch = useDispatch<AppDispatch>();
+  const history = useHistory();
+  const match = useRouteMatch();
 
   const getSongsList = () => {
     return (
@@ -32,14 +35,22 @@ export default function SongCategoryRow({
                 className={`mx-4 my-2`}
                 key={index}
                 onClick={async () => {
-                  if (songPlaying == null || songPlaying.id != item.id) {
-                    const songDetails = await NetworkManager.getSongDetails(
-                      item.url
-                    );
-                    if (songDetails.status === globalConstants.status.SUCCESS) {
-                      console.log(songDetails);
-                      dispatch(setSongPlaying(songDetails.data[0]));
-                      dispatch(setIsSongPlaying(true));
+                  console.log(item);
+                  if (item.type == "album") {
+                    history.push(`playlist/${item.id}`);
+                  } else if (item.type == "playlist") {
+                    history.push(`album/${item.id}`);
+                  } else {
+                    if (songPlaying == null || songPlaying.id != item.id) {
+                      const songDetails = await NetworkManager.getSongDetails(
+                        item.url
+                      );
+                      if (
+                        songDetails.status === globalConstants.status.SUCCESS
+                      ) {
+                        dispatch(setSongPlaying(songDetails.data[0]));
+                        dispatch(setIsSongPlaying(true));
+                      }
                     }
                   }
                 }}

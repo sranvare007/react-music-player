@@ -12,7 +12,7 @@ import { HomepageData, SongElement } from "./types/apiResponseTypes";
 import { AppDispatch, RootState } from "./types/propsTypes";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PlayList from "./screens/Playlist";
-import Album from "./screens/Album";
+import AlbumComponent from "./screens/Album";
 
 function App() {
   const homepageData: HomepageData = useSelector<RootState>(
@@ -64,7 +64,7 @@ function App() {
   return (
     !isLoading && (
       <Router>
-        <div className={`w-screen h-screen flex flex-col items-start`}>
+        <div className={`w-screen h-screen flex flex-col items-start relative`}>
           <NavBar />
           <CategoriesBar
             categoriesList={categoriesList as string[]}
@@ -83,11 +83,13 @@ function App() {
               <PlayList />
             </Route>
             <Route path="/album/:id">
-              <Album />
+              <AlbumComponent />
             </Route>
           </Switch>
 
-          {songPlaying != null && <SongPlayerBottom />}
+          <div className={`fixed bottom-0 left-0 right-0`}>
+            {songPlaying != null && <SongPlayerBottom />}
+          </div>
         </div>
       </Router>
     )

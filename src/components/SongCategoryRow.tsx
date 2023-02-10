@@ -35,11 +35,10 @@ export default function SongCategoryRow({
                 className={`mx-4 my-2`}
                 key={index}
                 onClick={async () => {
-                  console.log(item);
                   if (item.type == "album") {
-                    history.push(`playlist/${item.id}`);
-                  } else if (item.type == "playlist") {
                     history.push(`album/${item.id}`);
+                  } else if (item.type == "playlist") {
+                    history.push(`playlist/${item.id}`);
                   } else {
                     if (songPlaying == null || songPlaying.id != item.id) {
                       const songDetails = await NetworkManager.getSongDetails(

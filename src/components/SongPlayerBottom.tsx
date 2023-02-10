@@ -45,18 +45,9 @@ export default function SongPlayerBottom() {
     return () => clearInterval(timer);
   }, [songPlaying, isSongPlaying, timeElapsed]);
 
-  // function getTimeInMinutesFromSeconds(seconds: number) {
-  //   const minutesElpased = (seconds / 60).toFixed(0);
-  //   const secondsElapsed = (seconds % 60).toFixed(0);
-
-  //   return `${
-  //     minutesElpased.length < 2 ? "0" + minutesElpased : minutesElpased
-  //   }:${secondsElapsed.length < 2 ? "0" + secondsElapsed : secondsElapsed}`;
-  // }
-
   return (
     <div
-      className={`flex flex-row items-center absolute bottom-0 left-0 right-0 bg-[#7B2869] py-4 px-6 justify-between text-white rounded-tl-lg rounded-tr-lg shadow-md`}
+      className={`flex flex-row items-center bg-[#7B2869] py-6 px-6 justify-between text-white rounded-tl-lg rounded-tr-lg shadow-md`}
     >
       <audio src={songPlaying.downloadUrl[0].link} ref={audioPlayerRef} />
       {/* Song details container */}
@@ -77,14 +68,21 @@ export default function SongPlayerBottom() {
 
       {/* Song controller */}
       <div className={`flex flex-row items-center justify-center flex-1`}>
-        <BiRewind size={50} />
+        <BiRewind
+          size={50}
+          className={`cursor-pointer mr-6`}
+          onClick={() => {
+            audioPlayerRef.current!.currentTime =
+              audioPlayerRef.current!.currentTime - 5;
+          }}
+        />
         {isSongPlaying ? (
           <BiPause
             size={50}
             onClick={() => {
               dispatch(setIsSongPlaying(false));
             }}
-            className={`cursor-pointer`}
+            className={`cursor-pointer mr-6`}
           />
         ) : (
           <BiPlay
@@ -92,17 +90,26 @@ export default function SongPlayerBottom() {
               dispatch(setIsSongPlaying(true));
             }}
             size={50}
-            className={`cursor-pointer`}
+            className={`cursor-pointe mr-6`}
           />
         )}
-        <BiFastForward size={50} className={`cursor-pointer`} />
+        <BiFastForward
+          size={50}
+          className={`cursor-pointer mr-6`}
+          onClick={() => {
+            audioPlayerRef.current!.currentTime =
+              audioPlayerRef.current!.currentTime + 5;
+          }}
+        />
       </div>
       <div
         className={`flex flex-row items-center justify-center py-2 border-[1px] border-white rounded-3xl w-36`}
       >
         <p className={`text-sm font-sofia-sans font-medium `}>
-          {helpers.getTimeInMinutesFromSeconds(timeElapsed)} /{" "}
-          {helpers.getTimeInMinutesFromSeconds(audioTotalDuration)}
+          {helpers.getTimeInMinutesFromSeconds(
+            Number(audioPlayerRef.current?.currentTime.toFixed(0))
+          )}{" "}
+          / {helpers.getTimeInMinutesFromSeconds(audioTotalDuration)}
         </p>
       </div>
 

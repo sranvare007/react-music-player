@@ -24,11 +24,13 @@ export default function PlayList() {
   }
 
   return (
-    <SongList
-      imageUrl={playListDetails?.image[2].link as string}
-      title={playListDetails?.name as string}
-      subtitle={playListDetails?.subtitle as string}
-      songList={playListDetails?.songs as SongDetails[]}
-    />
+    !isLoading && (
+      <SongList
+        imageUrl={playListDetails?.image[2].link as string}
+        title={playListDetails?.name as string}
+        subtitle={playListDetails?.subtitle as string}
+        songList={playListDetails?.songs as SongDetails[]}
+      />
+    )
   );
 }

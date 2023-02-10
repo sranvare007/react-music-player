@@ -9,16 +9,16 @@ export default function NavBar() {
 
   return (
     <div
-      className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4 rounded-bl-lg rounded-br-lg`}
+      className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4 rounded-bl-md rounded-br-md`}
     >
       <div
-        className={`flex flex-row items-center`}
+        className={`flex flex-row items-center cursor-pointer`}
         onClick={() => {
           history.replace("/");
         }}
       >
         <GiMusicalNotes size={40} className={`-mb-4`} />
-        <p className={`font-dancing-script text-3xl px-4 py-5`}>Sangeet</p>
+        <p className={`font-dancing-script text-3xl px-4 py-6`}>Sangeet</p>
         <GiMusicalNotes size={40} className={`-mt-4`} />
       </div>
       <div

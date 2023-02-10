@@ -3,7 +3,7 @@ export const NetworkManager = {
   GET_HOME_DATA: "modules",
   GET_SONG_DETAILS: "songs",
   GET_ALBUM_DETAILS: "albums",
-  GET_PLAYLIST_DETAILS: "albums",
+  GET_PLAYLIST_DETAILS: "playlists",
 
   async getHomePageData() {
     try {

@@ -1,5 +1,8 @@
 import React from "react";
 import { BsPlayCircle, BsPlayCircleFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { setIsSongPlaying } from "../features/songList/isSongPlaying";
+import { setSongPlaying } from "../features/songList/songPlaying";
 import { helpers } from "../helper";
 import { SongDetails } from "../types/apiResponseTypes";
 
@@ -16,8 +19,10 @@ export default function SongList({
   subtitle,
   songList,
 }: SongListProps) {
+  const dispatch = useDispatch();
+
   return (
-    <div className={`w-full flex flex-col items-start px-28 pt-10`}>
+    <div className={`w-full flex flex-col items-start px-28 pt-10 pb-24`}>
       <div className={`flex flex-row items-start`}>
         <img
           src={imageUrl}
@@ -32,9 +37,14 @@ export default function SongList({
         </div>
       </div>
       <div className={`flex w-full flex-col items-start mt-20`}>
-        {songList.map((item, index) => (
+        {songList?.map((item, index) => (
           <div
             className={`flex flex-row items-center justify-center w-full hover:bg-[#7B286955] mb-2`}
+            key={index}
+            onClick={() => {
+              dispatch(setSongPlaying(item));
+              dispatch(setIsSongPlaying(true));
+            }}
           >
             <div className={`grid grid-cols-12 w-11/12 items-center py-2`}>
               <div className={`col-start-1 col-end-2`}>

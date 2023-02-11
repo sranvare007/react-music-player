@@ -14,6 +14,8 @@ export type SongsCategoryRowProps = {
 
 export type SongCardProps = {
   imageUrl: string;
+  title?: string;
+  artist?: string;
 };
 
 export type RootState = ReturnType<typeof store.getState>;

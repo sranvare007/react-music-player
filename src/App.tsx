@@ -86,7 +86,7 @@ function App() {
             <Route path="/album/:id">
               <AlbumComponent />
             </Route>
-            <Route path="/search/:searchVal">
+            <Route path="/search">
               <SearchResult />
             </Route>
           </Switch>

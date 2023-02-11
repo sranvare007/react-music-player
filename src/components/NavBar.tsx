@@ -2,23 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { GiMusicalNotes } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchVal } from "../features/songList/searchVal";
 
 export default function NavBar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
   const [searchInput, setSearchInput] = useState("");
-
-  // const listenEnterBtn = (event: KeyboardEvent) => {
-  //   if (event.key === "Enter") {
-  //     history.push("/search");
-  //     console.log("Hello");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("keypress", listenEnterBtn, true);
-  //   return document.removeEventListener("keypress", listenEnterBtn, true);
-  // }, []);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -52,7 +43,12 @@ export default function NavBar() {
           }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              history.replace(`/search/${encodeURI(searchInput)}`);
+              if (history.location.pathname.includes("search")) {
+                dispatch(setSearchVal(searchInput));
+              } else {
+                dispatch(setSearchVal(searchInput));
+                history.replace(`/search`);
+              }
             }
           }}
           className={`border-none focus:outline-none text-black mx-3 font-large text-md font-sofia-sans`}

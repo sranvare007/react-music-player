@@ -60,10 +60,10 @@ export const NetworkManager = {
     }
   },
 
-  async getSongSearchDetails(searchVal: string) {
+  async getSongSearchDetails(searchVal: string, limit: number) {
     try {
       const response = await axiosInstance.get(
-        `${this.GET_SONG_SEARCH_DETAILS}?query=${searchVal}`,
+        `${this.GET_SONG_SEARCH_DETAILS}?query=${searchVal}&limit=${limit}`,
         {}
       );
       return response.data;

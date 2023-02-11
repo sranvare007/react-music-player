@@ -39,7 +39,7 @@ export default function SongList({
       <div className={`flex w-full flex-col items-start mt-20`}>
         {songList?.map((item, index) => (
           <div
-            className={`flex flex-row items-center justify-center w-full hover:bg-[#7B286955] mb-2`}
+            className={`flex flex-row items-center justify-center w-full hover:bg-[#7B286955] mb-2 cursor-pointer`}
             key={index}
             onClick={() => {
               dispatch(setSongPlaying(item));

@@ -1,3 +1,4 @@
+import { globalConstants } from "../constants";
 import { axiosInstance } from "./axiosInstance";
 export const NetworkManager = {
   GET_HOME_DATA: "modules",
@@ -5,10 +6,19 @@ export const NetworkManager = {
   GET_ALBUM_DETAILS: "albums",
   GET_PLAYLIST_DETAILS: "playlists",
 
+  getRandomUserAgent() {
+    const randomUserAgentIndex =
+      Math.random() * (globalConstants.USER_AGENT_LIST.length - 0) + 0;
+    return randomUserAgentIndex;
+  },
+
   async getHomePageData() {
     try {
       const response = await axiosInstance.get(this.GET_HOME_DATA, {
         params: ["hindi", "english"],
+        headers: {
+          "User-Agent": this.getRandomUserAgent(),
+        },
       });
       return response.data;
     } catch (e) {
@@ -20,7 +30,11 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(
         `${this.GET_SONG_DETAILS}?link=${songUrl}`,
-        {}
+        {
+          headers: {
+            "User-Agent": this.getRandomUserAgent(),
+          },
+        }
       );
       return response.data;
     } catch (e) {
@@ -32,7 +46,11 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(
         `${this.GET_ALBUM_DETAILS}?id=${albumId}`,
-        {}
+        {
+          headers: {
+            "User-Agent": this.getRandomUserAgent(),
+          },
+        }
       );
       return response.data;
     } catch (e) {
@@ -44,7 +62,11 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(
         `${this.GET_PLAYLIST_DETAILS}?id=${playlistId}`,
-        {}
+        {
+          headers: {
+            "User-Agent": this.getRandomUserAgent(),
+          },
+        }
       );
       return response.data;
     } catch (e) {

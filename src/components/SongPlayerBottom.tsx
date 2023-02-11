@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import { BiRewind, BiFastForward, BiPlay, BiPause } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,10 +26,25 @@ export default function SongPlayerBottom() {
     "160kbps",
     "320kbps",
   ];
-  const [selectedQuality, setSelectedQuality] = useState(availableQualities[0]);
+  const [selectedQuality, setSelectedQuality] = useState(availableQualities[2]);
   const [shouldShowQualityDropdown, setShouldShowQualityDropdown] =
     useState(false);
   const [selectedSongUrl, setSelectedSongUrl] = useState("");
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      setShouldShowQualityDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
 
   useEffect(() => {
     if (songPlaying != prevSong.current) {
@@ -118,7 +133,7 @@ export default function SongPlayerBottom() {
         />
       </div>
       <div
-        className={`flex flex-row items-center justify-center py-2 border-[1px] border-white rounded-3xl w-36`}
+        className={`flex flex-row items-center justify-center py-2 border-[1px] border-white rounded-3xl w-36 unselectable`}
       >
         <p className={`text-sm font-sofia-sans font-medium `}>
           {helpers.getTimeInMinutesFromSeconds(
@@ -139,20 +154,23 @@ export default function SongPlayerBottom() {
       </div>
       {shouldShowQualityDropdown && (
         <div
-          className={`absolute right-10 -top-64 w-40 flex flex-col items-center border border-gray-500 rounded-lg bg-gray-50 animate-scaleup origin-bottom overflow-hidden`}
+          className={`absolute right-10 -top-64 w-40 flex flex-col items-center border border-white rounded-lg bg-[#7B2869] animate-scaleup origin-bottom overflow-hidden`}
         >
-          <div className={`w-full border-b border-gray-500`}>
+          <div className={`w-full border-b border-white`}>
             <p
-              className={`font-sofia-sans font-semibold text-lg text-black text-center py-3`}
+              className={`font-sofia-sans font-semibold text-lg text-center py-3  text-white`}
             >
               Quality
             </p>
           </div>
-          <div className={`flex flex-col w-full items-center`}>
+          <div
+            className={`flex flex-col w-full items-center`}
+            ref={ref as LegacyRef<HTMLDivElement>}
+          >
             {availableQualities.map((item, index) => (
               <p
-                className={`w-full text-center font-sofia-sans text-black font-medium py-3 cursor-pointer ${
-                  selectedQuality == item ? "bg-[#EAEAEA]" : ""
+                className={`w-full text-center font-sofia-sans  text-white font-medium py-3 cursor-pointer ${
+                  selectedQuality == item ? "" : "opacity-50"
                 }`}
                 onClick={() => {
                   setSelectedQuality(item);

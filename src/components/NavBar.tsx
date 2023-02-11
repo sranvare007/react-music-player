@@ -9,7 +9,7 @@ export default function NavBar() {
 
   return (
     <div
-      className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4 rounded-bl-md rounded-br-md`}
+      className={`flex flex-row items-center justify-between bg-[#7B2869] w-full text-white px-4`}
     >
       <div
         className={`flex flex-row items-center cursor-pointer`}

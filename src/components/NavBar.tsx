@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GiMusicalNotes } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
@@ -6,6 +6,19 @@ import { useHistory } from "react-router-dom";
 export default function NavBar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+  const [searchInput, setSearchInput] = useState("");
+
+  // const listenEnterBtn = (event: KeyboardEvent) => {
+  //   if (event.key === "Enter") {
+  //     history.push("/search");
+  //     console.log("Hello");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener("keypress", listenEnterBtn, true);
+  //   return document.removeEventListener("keypress", listenEnterBtn, true);
+  // }, []);
 
   return (
     <div
@@ -31,8 +44,17 @@ export default function NavBar() {
       >
         <BsSearch size={25} color="#000" />
         <input
-          ref={inputRef}
           type={"text"}
+          ref={inputRef}
+          value={searchInput}
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              history.replace(`/search/${encodeURI(searchInput)}`);
+            }
+          }}
           className={`border-none focus:outline-none text-black mx-3 font-large text-md font-sofia-sans`}
         />
       </div>

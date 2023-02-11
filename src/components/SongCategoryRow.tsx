@@ -22,7 +22,6 @@ export default function SongCategoryRow({
   ) as SongDetails;
   const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
-  const match = useRouteMatch();
 
   const getSongsList = () => {
     return (

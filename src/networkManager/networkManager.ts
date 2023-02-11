@@ -5,6 +5,7 @@ export const NetworkManager = {
   GET_SONG_DETAILS: "songs",
   GET_ALBUM_DETAILS: "albums",
   GET_PLAYLIST_DETAILS: "playlists",
+  GET_SONG_SEARCH_DETAILS: "search/songs",
 
   getRandomUserAgent() {
     const randomUserAgentIndex =
@@ -16,9 +17,6 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(this.GET_HOME_DATA, {
         params: ["hindi", "english"],
-        headers: {
-          "User-Agent": this.getRandomUserAgent(),
-        },
       });
       return response.data;
     } catch (e) {
@@ -30,11 +28,7 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(
         `${this.GET_SONG_DETAILS}?link=${songUrl}`,
-        {
-          headers: {
-            "User-Agent": this.getRandomUserAgent(),
-          },
-        }
+        {}
       );
       return response.data;
     } catch (e) {
@@ -46,11 +40,7 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(
         `${this.GET_ALBUM_DETAILS}?id=${albumId}`,
-        {
-          headers: {
-            "User-Agent": this.getRandomUserAgent(),
-          },
-        }
+        {}
       );
       return response.data;
     } catch (e) {
@@ -62,11 +52,19 @@ export const NetworkManager = {
     try {
       const response = await axiosInstance.get(
         `${this.GET_PLAYLIST_DETAILS}?id=${playlistId}`,
-        {
-          headers: {
-            "User-Agent": this.getRandomUserAgent(),
-          },
-        }
+        {}
+      );
+      return response.data;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async getSongSearchDetails(searchVal: string) {
+    try {
+      const response = await axiosInstance.get(
+        `${this.GET_SONG_SEARCH_DETAILS}?query=${searchVal}`,
+        {}
       );
       return response.data;
     } catch (e) {

@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "./types/propsTypes";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PlayList from "./screens/Playlist";
 import AlbumComponent from "./screens/Album";
+import SearchResult from "./screens/SearchResult";
 
 function App() {
   const homepageData: HomepageData = useSelector<RootState>(
@@ -84,6 +85,9 @@ function App() {
             </Route>
             <Route path="/album/:id">
               <AlbumComponent />
+            </Route>
+            <Route path="/search/:searchVal">
+              <SearchResult />
             </Route>
           </Switch>
 

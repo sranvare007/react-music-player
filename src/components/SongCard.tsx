@@ -4,7 +4,7 @@ import { SongCardProps } from "../types/propsTypes";
 
 export default function SongCard({ imageUrl, title, artist }: SongCardProps) {
   return (
-    <div className={`flex flex-col items-center w-40 h-40`}>
+    <div className={`flex flex-col items-center w-44 h-44`}>
       <div
         className={`flex w-36 h-36 rounded-lg relative overflow-hidden cursor-pointer`}
         id="card-container"

@@ -53,7 +53,15 @@ export default function SongCategoryRow({
                   }
                 }}
               >
-                <SongCard imageUrl={item.image[2].link} />
+                <SongCard
+                  imageUrl={item.image[2].link}
+                  artist={
+                    item.primaryArtists && item.primaryArtists.length > 0
+                      ? item.primaryArtists[0].name
+                      : item.subtitle
+                  }
+                  title={item.name || item?.title}
+                />
               </div>
             );
           })}

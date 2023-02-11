@@ -133,6 +133,8 @@ export interface SongElement {
   album?: AlbumAlbum;
   duration?: string;
   label?: string;
+  title?: string;
+  subtitle?: string;
 }
 
 export interface AlbumAlbum {
